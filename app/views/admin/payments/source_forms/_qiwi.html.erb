@@ -1,0 +1,12 @@
+<fieldset>
+  <div id="card_form">
+    <%= image_tag "qiwi.jpg"%>
+    <% param_prefix = "payment_source[#{payment_method.id}]" %>
+    <div>
+      <label for="">Qiwi Number</label><br />
+      <%= text_field_tag "#{param_prefix}[number]", '', :class => 'required', :size => 12, :maxlength => 12 %>
+      <span class="req">*</span>
+      </span>
+    </div>
+  </div>
+</fieldset>

@@ -1,0 +1,5 @@
+<% param_prefix = "payment_source[#{payment_method.id}]" %>
+<p>Phone Number for qiwi
+<%= text_field_tag "#{param_prefix}[number]", '', { :id => 'number', :class => 'required', :size => 10} %>
+</p>
+
