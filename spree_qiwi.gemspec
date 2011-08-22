@@ -16,5 +16,6 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
+  s.add_dependency('nokogiri')
   s.add_dependency('spree_core', '>= 0.50.2')
 end
