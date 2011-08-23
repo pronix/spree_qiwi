@@ -1,3 +1,4 @@
+require 'nokogiri'
 Nokogiri::XML::Builder.class_eval do
   class << self
   def new_for_qiwi(id,password,request_type,&block)
