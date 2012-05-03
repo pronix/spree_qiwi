@@ -32,7 +32,7 @@
 #
 class Gateway::Qiwi < Gateway
   require 'nokogiri'
-  require 'md5'
+  require 'digest/md5'
   require 'net/http'
   require 'uri'
   attr_accessor :qiwi_number
@@ -54,16 +54,16 @@ class Gateway::Qiwi < Gateway
   def encrypt(string)
     # количество символов кратное 8
     string = string + " "*(7-string.size%8.0)
-    result = `echo '#{string}' | openssl enc -des-ede3 -e -nopad -nosalt -a -K #{generate_key} -iv 0 -p`.split(/key\=.{48,48}\n/).last
+    result = `echo '#{string}' | openssl enc -des-ede3 -e -nopad -nosalt -a -K #{generate_key} -iv 0 -p`.split(/\niv \=[0..9]+\n/).last
     result
   end
 
   # генерилка ключа - верно работает
   # FIXME require cache and regenerate after change pass or merchant_id
   def generate_key
-    sh=MD5.new(preferences["password"]).to_s.split('')
+    sh = Digest::MD5.hexdigest(preferences["password"]).to_s.split('')
     a=sh.to16pairs
-    b=MD5.new(preferences["merchant_id"]+sh.join).to_s.split('').to16pairs
+    b = Digest::MD5.hexdigest(preferences["merchant_id"]+sh.join).to_s.split('').to16pairs
 
     key = []
     # забиваем нулями массив
